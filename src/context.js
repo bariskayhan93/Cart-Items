@@ -26,6 +26,10 @@ const AppProvider = ({ children }) => {
     dispatch({type:'DECREASE',payload:id})
   }
 
+  const clearCart=()=>{
+    dispatch({type:'CLEAR_CART'})
+  }
+
   const fetchData=async ()=>{
     dispatch({type:'LOADING'})
     const response=await fetch(url)
@@ -37,6 +41,9 @@ const AppProvider = ({ children }) => {
     fetchData()
   }, [])
 
+    useEffect(() => {
+    dispatch({type:'TOTAL_ITEMS'})
+  }, [state.cart])
 
   return (
     <AppContext.Provider
@@ -44,7 +51,8 @@ const AppProvider = ({ children }) => {
         ...state,
         increase,
         decrease,
-        remove
+        remove,
+        clearCart
       }}
     >
       {children}
